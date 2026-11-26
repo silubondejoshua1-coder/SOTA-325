@@ -502,7 +502,318 @@ export const SOTA325LandingPage: React.FC<SOTA325LandingPageProps> = ({
       </main>
     </div>
   );
+};import React, { useState } from "react";
+
+export interface SignupFormPayload {
+  legalName: string;
+  firstName: string;
+  lastName: string;
+  artistOrLabelName: string;
+  phoneNumber: string;
+  town: string;
+  password: string;
+  acceptedTerms: boolean;
+  acceptedTermsAt: string;
+}
+
+interface SOTA325SignupPanelProps {
+  onSuccess?: (payload: SignupFormPayload) => void;
+  onOpenTerms?: () => void;
+}
+
+export const SOTA325SignupPanel: React.FC<SOTA325SignupPanelProps> = ({
+  onSuccess,
+  onOpenTerms,
+}) => {
+  const [legalName, setLegalName] = useState("");
+  const [artistOrLabelName, setArtistOrLabelName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [town, setTown] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const parseLegalName = (full: string) => {
+    const parts = full.trim().split(/\s+/).filter(Boolean);
+    if (parts.length < 2) {
+      return { valid: false, firstName: "", lastName: "" };
+    }
+    return {
+      valid: true,
+      firstName: parts[0],
+      lastName: parts.slice(1).join(" "),
+    };
+  };
+
+  const nameCheck = parseLegalName(legalName);
+  const passwordsMatch = password.length > 0 && password === repeatPassword;
+
+  const isFormReady =
+    nameCheck.valid &&
+    artistOrLabelName.trim().length > 0 &&
+    phoneNumber.trim().length > 0 &&
+    town.trim().length > 0 &&
+    password.length >= 6 &&
+    passwordsMatch &&
+    acceptedTerms;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg(null);
+
+    if (!nameCheck.valid) {
+      setErrorMsg("Please enter both your first name and last name for Legal Name.");
+      return;
+    }
+    if (!artistOrLabelName.trim()) {
+      setErrorMsg("Please enter your Artist or Label Name.");
+      return;
+    }
+    if (!phoneNumber.trim()) {
+      setErrorMsg("Please enter your phone number.");
+      return;
+    }
+    if (!town.trim()) {
+      setErrorMsg("Please enter the town you are based in.");
+      return;
+    }
+    if (password.length < 6) {
+      setErrorMsg("Password must be at least 6 characters.");
+      return;
+    }
+    if (password !== repeatPassword) {
+      setErrorMsg("Repeat Password does not match Password.");
+      return;
+    }
+    if (!acceptedTerms) {
+      setErrorMsg(
+        "You must check the box agreeing to SOUNDTRACK AND SOTA 325 TERMS AND CONDITIONS OF SERVICES before entering the Artist Portal."
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const payload: SignupFormPayload = {
+        legalName: legalName.trim(),
+        firstName: nameCheck.firstName,
+        lastName: nameCheck.lastName,
+        artistOrLabelName: artistOrLabelName.trim(),
+        phoneNumber: phoneNumber.trim(),
+        town: town.trim(),
+        password,
+        acceptedTerms: true,
+        acceptedTermsAt: new Date().toISOString(),
+      };
+
+      onSuccess?.(payload);
+    } catch (err: any) {
+      setErrorMsg(err?.message || "Could not complete signup. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#EFE8D8] text-[#0B0B0B] px-4 py-8 flex items-center justify-center font-sans">
+      <article className="w-full max-w-md border-2 border-[#0B0B0B] bg-[#F7F3E8] shadow-[8px_8px_0px_#0B0B0B]">
+        {/* Editorial Masthead & Lead Headline */}
+        <header className="border-b-2 border-[#0B0B0B] bg-[#F7F3E8] px-6 pt-6 pb-5">
+          <div className="flex items-center justify-between border-b border-[#0B0B0B]/25 pb-2.5 mb-4 text-[11px] font-bold uppercase tracking-[0.18em] text-[#0B0B0B]/80">
+            <span>SOTA 325 • ARTIST EDITION</span>
+            <span className="bg-[#FFCD00] px-2 py-0.5 text-[#0B0B0B] border border-[#0B0B0B]">
+              GET HEARD, GET PAID!
+            </span>
+          </div>
+
+          <h1 className="font-serif text-3xl sm:text-[34px] font-bold leading-[1.06] tracking-tight text-[#0B0B0B]">
+            Get Started with SOTA 325
+          </h1>
+
+          <p className="mt-3 border-l-4 border-[#FFCD00] pl-3.5 text-sm font-semibold leading-snug text-[#0B0B0B]">
+            Distribute your music in 3 minutes 25 seconds and keep 100% of your royalties.
+          </p>
+
+          <p className="mt-2.5 text-xs italic font-medium tracking-wide text-[#0B0B0B]/75">
+            3 Minutes 25 Seconds, Ichalo Chonse!
+          </p>
+        </header>
+
+        {/* Cascading Single-Column Editorial Form */}
+        <form onSubmit={handleSubmit} className="divide-y divide-[#0B0B0B]/15" noValidate>
+          {/* 1. Legal Name */}
+          <div className="px-6 py-4">
+            <label className="block text-xs font-extrabold uppercase tracking-[0.12em] text-[#0B0B0B] mb-1.5">
+              01 / Legal Name (First &amp; Last Name) *
+            </label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. Joshua Silubonde"
+              value={legalName}
+              onChange={(e) => setLegalName(e.target.value)}
+              className="w-full border border-[#0B0B0B] bg-[#FBF9F4] px-3.5 py-2.5 text-sm text-[#0B0B0B] placeholder-[#0B0B0B]/40 focus:bg-[#FFCD00]/20 focus:outline-none"
+            />
+            {legalName.trim().length > 0 && !nameCheck.valid && (
+              <p className="mt-1.5 text-xs font-semibold text-red-700">
+                Enter both your first name and last name.
+              </p>
+            )}
+          </div>
+
+          {/* 2. Artist / Label Name */}
+          <div className="px-6 py-4">
+            <label className="block text-xs font-extrabold uppercase tracking-[0.12em] text-[#0B0B0B] mb-1.5">
+              02 / Artist / Label Name *
+            </label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. Soundtrack Talent Agency / Stage Name"
+              value={artistOrLabelName}
+              onChange={(e) => setArtistOrLabelName(e.target.value)}
+              className="w-full border border-[#0B0B0B] bg-[#FBF9F4] px-3.5 py-2.5 text-sm text-[#0B0B0B] placeholder-[#0B0B0B]/40 focus:bg-[#FFCD00]/20 focus:outline-none"
+            />
+          </div>
+
+          {/* 3. Phone Number */}
+          <div className="px-6 py-4">
+            <label className="block text-xs font-extrabold uppercase tracking-[0.12em] text-[#0B0B0B] mb-1.5">
+              03 / Phone Number *
+            </label>
+            <input
+              type="tel"
+              required
+              placeholder="e.g. +260 97X XXX XXX"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="w-full border border-[#0B0B0B] bg-[#FBF9F4] px-3.5 py-2.5 text-sm text-[#0B0B0B] placeholder-[#0B0B0B]/40 focus:bg-[#FFCD00]/20 focus:outline-none"
+            />
+          </div>
+
+          {/* 4. Town Based In */}
+          <div className="px-6 py-4">
+            <label className="block text-xs font-extrabold uppercase tracking-[0.12em] text-[#0B0B0B] mb-1.5">
+              04 / Town Based In *
+            </label>
+            <input
+              type="text"
+              required
+              placeholder="e.g. Lusaka"
+              value={town}
+              onChange={(e) => setTown(e.target.value)}
+              className="w-full border border-[#0B0B0B] bg-[#FBF9F4] px-3.5 py-2.5 text-sm text-[#0B0B0B] placeholder-[#0B0B0B]/40 focus:bg-[#FFCD00]/20 focus:outline-none"
+            />
+          </div>
+
+          {/* 5. Password */}
+          <div className="px-6 py-4">
+            <label className="block text-xs font-extrabold uppercase tracking-[0.12em] text-[#0B0B0B] mb-1.5">
+              05 / Password *
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border border-[#0B0B0B] bg-[#FBF9F4] px-3.5 py-2.5 pr-16 text-sm text-[#0B0B0B] placeholder-[#0B0B0B]/40 focus:bg-[#FFCD00]/20 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-extrabold uppercase tracking-wider text-[#0B0B0B] underline"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+          </div>
+
+          {/* 6. Repeat Password + Editorial Callout Tip */}
+          <div className="px-6 py-4">
+            <label className="block text-xs font-extrabold uppercase tracking-[0.12em] text-[#0B0B0B] mb-1.5">
+              06 / Repeat Password *
+            </label>
+            <div className="relative">
+              <input
+                type={showRepeatPassword ? "text" : "password"}
+                required
+                placeholder="Repeat your password to confirm"
+                value={repeatPassword}
+                onChange={(e) => setRepeatPassword(e.target.value)}
+                className="w-full border border-[#0B0B0B] bg-[#FBF9F4] px-3.5 py-2.5 pr-16 text-sm text-[#0B0B0B] placeholder-[#0B0B0B]/40 focus:bg-[#FFCD00]/20 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowRepeatPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-extrabold uppercase tracking-wider text-[#0B0B0B] underline"
+              >
+                {showRepeatPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+
+            {repeatPassword.length > 0 && !passwordsMatch && (
+              <p className="mt-1.5 text-xs font-semibold text-red-700">
+                Passwords do not match.
+              </p>
+            )}
+
+            <div className="mt-3 border-l-4 border-[#0B0B0B] bg-[#FFCD00]/30 p-3 text-xs leading-relaxed text-[#0B0B0B]">
+              <span className="font-black uppercase tracking-wider">Editor&apos;s Tip: </span>
+              Take a screenshot of your details now so you have them handy in case you ever
+              forget your password.
+            </div>
+          </div>
+
+          {/* Terms Agreement & Submit Footer */}
+          <div className="px-6 py-5 bg-[#EFE8D8]/60 space-y-4">
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                className="mt-1 h-4 w-4 accent-[#0B0B0B] border border-[#0B0B0B] cursor-pointer"
+              />
+              <span className="text-xs leading-relaxed text-[#0B0B0B]">
+                I agree to{" "}
+                <button
+                  type="button"
+                  onClick={onOpenTerms}
+                  className="font-extrabold underline decoration-[#FFCD00] decoration-2 underline-offset-2 text-[#0B0B0B]"
+                >
+                  SOUNDTRACK AND SOTA 325 TERMS AND CONDITIONS OF SERVICES
+                </button>
+                . Checking this box unlocks access to the Artist Portal.
+              </span>
+            </label>
+
+            {errorMsg && (
+              <div className="border border-red-700 bg-red-100 px-3 py-2 text-xs font-semibold text-red-900">
+                {errorMsg}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={!isFormReady || isSubmitting}
+              className="w-full border-2 border-[#0B0B0B] bg-[#FFCD00] py-3.5 px-4 text-xs font-black uppercase tracking-[0.14em] text-[#0B0B0B] shadow-[4px_4px_0px_#0B0B0B] transition hover:bg-[#0B0B0B] hover:text-[#FFCD00] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#FFCD00] disabled:hover:text-[#0B0B0B]"
+            >
+              {isSubmitting ? "Saving & Entering Portal..." : "Save and Get Started"}
+            </button>
+          </div>
+        </form>
+      </article>
+    </div>
+  );
 };
+
+export default SOTA325SignupPanel;
+
 
 export default SOTA325LandingPage;
 
