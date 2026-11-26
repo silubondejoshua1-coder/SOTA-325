@@ -296,4 +296,214 @@
     });
   </script>
 </body>
-</html>
+</html>import React from "react";
+
+interface SOTA325LandingPageProps {
+  isAuthenticated?: boolean;
+  onUploadMusicClick?: () => void;
+  onSeePricingClick?: () => void;
+  onAuthActionClick?: () => void;
+  heroImageUrl?: string;
+}
+
+export const SOTA325LandingPage: React.FC<SOTA325LandingPageProps> = ({
+  isAuthenticated = false,
+  onUploadMusicClick,
+  onSeePricingClick,
+  onAuthActionClick,
+  // Replace with your hosted ramen + white headphones image asset
+  heroImageUrl = "/assets/sota325-noodles-headphones.jpg",
+}) => {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#FBF8EF] via-[#F9F3DF] to-[#F6ECCB] text-[#0B0B0B] font-serif selection:bg-[#FFCD00] selection:text-[#0B0B0B] overflow-x-hidden">
+      {/* Top Black Navigation Bar */}
+      <header className="sticky top-0 z-30 bg-[#0B0B0B] text-white px-4 py-3 border-b border-black">
+        <div className="max-w-5xl mx-auto flex items-center justify-between gap-2">
+          {/* Soundtrack Logo Lockup */}
+          <div className="flex flex-col items-start leading-none select-none">
+            <div className="inline-flex items-center rounded-full border border-[#FFCD00] px-2 py-0.5 text-[11px] font-sans font-extrabold tracking-tight">
+              <span className="bg-[#FFCD00] text-[#0B0B0B] rounded-full px-1.5 py-0.2 mr-1">
+                Sound
+              </span>
+              <span className="text-[#FFCD00] pr-0.5">track</span>
+            </div>
+            <span className="mt-1 pl-3 text-[10px] italic text-[#FFCD00]/90 font-serif tracking-wide">
+              get heard
+            </span>
+          </div>
+
+          {/* Nav Actions */}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={onUploadMusicClick}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[#FFCD00] px-3.5 py-2 text-xs sm:text-sm font-serif font-semibold text-[#0B0B0B] shadow-sm transition hover:brightness-105 active:scale-[0.99]"
+            >
+              {/* Upload Tray Icon */}
+              <svg
+                className="w-3.5 h-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              <span>Upload Music</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={onAuthActionClick}
+              className="text-xs sm:text-sm font-serif font-medium text-white hover:text-[#FFCD00] transition px-1"
+            >
+              {isAuthenticated ? "Sign Out" : "Sign In"}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Hero Section */}
+      <main className="max-w-xl mx-auto px-5 pt-10 pb-16">
+        {/* Bold Editorial Headline */}
+        <h1 className="font-serif text-[38px] sm:text-5xl font-black leading-[1.12] tracking-tight text-[#0B0B0B]">
+          3 Minutes 25
+          <br />
+          Seconds —
+          <br />
+          <span className="italic font-black">Ichalo Chonse !</span>
+        </h1>
+
+        {/* Subheadline */}
+        <p className="mt-5 font-serif text-lg sm:text-xl leading-snug text-[#2B2923] max-w-md">
+          Music distribution made fast and easy like making noodles.
+        </p>
+
+        {/* Primary CTA Row */}
+        <div className="mt-7 flex flex-wrap items-center gap-3.5">
+          <button
+            type="button"
+            onClick={onUploadMusicClick}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0B0B0B] px-5 py-3 text-sm sm:text-base font-serif font-semibold text-[#FFCD00] shadow-md transition hover:bg-neutral-900 active:scale-[0.99]"
+          >
+            <svg
+              className="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+            <span>Upload Music</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onSeePricingClick}
+            className="inline-flex items-center justify-center rounded-lg bg-[#FFCD00] px-6 py-3 text-sm sm:text-base font-serif font-semibold text-[#0B0B0B] shadow-sm transition hover:brightness-105 active:scale-[0.99]"
+          >
+            See pricing
+          </button>
+        </div>
+
+        {/* Circular Showcase + Floating DSP Badges */}
+        <div className="relative mt-11 pt-12 pb-6 flex flex-col items-center">
+          {/* Top Center Pill: Apple Music */}
+          <div className="z-20 mb-3">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0B0B0B] px-3.5 py-1.5 text-xs font-serif font-medium text-[#FFCD00] shadow-md">
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.33c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.68-1.1 1.78-.96 2.84 1.04.08 2.08-.52 2.72-1.3z" />
+              </svg>
+              <span>Apple Music</span>
+            </span>
+          </div>
+
+          {/* Upper Row Pills: Spotify & Boomplay */}
+          <div className="z-20 w-full max-w-[340px] flex items-center justify-between px-1 -mb-4">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0B0B0B] px-3.5 py-1.5 text-xs font-serif font-medium text-[#FFCD00] shadow-md">
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.59 14.42a.62.62 0 0 1-.85.21c-2.34-1.43-5.28-1.75-8.75-.96a.62.62 0 1 1-.28-1.21c3.8-.87 7.05-.5 9.67 1.11.3.18.39.56.21.85zm1.22-2.72a.78.78 0 0 1-1.07.26c-2.68-1.65-6.76-2.12-9.93-1.16a.78.78 0 1 1-.45-1.49c3.62-1.1 8.12-.57 11.19 1.32.37.22.48.7.26 1.07zm.11-2.83C14.71 8.96 9.41 8.78 6.35 9.71a.93.93 0 1 1-.54-1.78c3.52-1.07 9.37-.86 13.06 1.33a.93.93 0 0 1-.95 1.61z" />
+              </svg>
+              <span>Spotify</span>
+            </span>
+
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0B0B0B] px-3.5 py-1.5 text-xs font-serif font-medium text-[#FFCD00] shadow-md">
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
+              </svg>
+              <span>Boomplay</span>
+            </span>
+          </div>
+
+          {/* Center Framed Circle with Yellow Crescent Accent */}
+          <div className="relative w-[290px] h-[290px] sm:w-[330px] sm:h-[330px]">
+            {/* Offset Yellow Crescent Ring */}
+            <div
+              aria-hidden="true"
+              className="absolute -right-2 top-1 w-full h-full rounded-full bg-[#FFCD00]"
+            />
+
+            {/* Main Black-Bordered Image Circle */}
+            <div className="relative z-10 w-full h-full rounded-full border-[3px] border-[#0B0B0B] bg-[#EDE4D3] overflow-hidden shadow-lg">
+              <img
+                src={heroImageUrl}
+                alt="Steaming bowl of noodles with white studio headphones"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Mid-Left Pill: TikTok */}
+            <span className="z-20 absolute -left-4 top-1/2 -translate-y-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#0B0B0B] px-3.5 py-1.5 text-xs font-serif font-medium text-[#FFCD00] shadow-md">
+              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                <path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z" />
+              </svg>
+              <span>TikTok</span>
+            </span>
+
+            {/* Mid-Right Pill: Shazam */}
+            <span className="z-20 absolute -right-4 top-1/2 -translate-y-1/2 inline-flex items-center gap-1.5 rounded-full bg-[#0B0B0B] px-3.5 py-1.5 text-xs font-serif font-medium text-[#FFCD00] shadow-md">
+              <svg
+                className="w-3.5 h-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+              >
+                <line x1="4" y1="10" x2="4" y2="14" />
+                <line x1="8" y1="7" x2="8" y2="17" />
+                <line x1="12" y1="4" x2="12" y2="20" />
+                <line x1="16" y1="7" x2="16" y2="17" />
+                <line x1="20" y1="10" x2="20" y2="14" />
+              </svg>
+              <span>Shazam</span>
+            </span>
+
+            {/* Bottom-Right Yellow Card: 200+ PLATFORMS */}
+            <div className="z-20 absolute -right-3 bottom-3 rounded-xl bg-[#FFCD00] border border-[#0B0B0B]/15 px-4 py-2.5 text-center shadow-lg">
+              <div className="font-serif text-2xl sm:text-3xl font-black leading-none text-[#0B0B0B]">
+                200+
+              </div>
+              <div className="mt-1 font-sans text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#0B0B0B]">
+                PLATFORMS
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default SOTA325LandingPage;
+
+
