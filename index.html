@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOTA 325 — GET HEARD, GET PAID!</title>
+  <style>
+    :root {
+      --yellow: #FFCD00;
+      --black: #0B0B0B;
+      --surface: #141414;
+      --border: #262626;
+      --white: #FFFFFF;
+      --muted: #B8B8B8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--black);
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 6%;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--black);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      color: var(--yellow);
+    }
+
+    .btn-yellow {
+      background-color: var(--yellow);
+      color: var(--black);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .btn-yellow:hover {
+      opacity: 0.92;
+    }
+
+    .hero {
+      max-width: 820px;
+      margin: 56px auto 48px;
+      padding: 0 6%;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--yellow);
+      color: var(--black);
+      font-weight: 900;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: 2.3rem;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      color: var(--white);
+    }
+
+    .slogan {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--yellow);
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 auto 28px;
+      font-size: 1rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      max-width: 960px;
+      margin: 0 auto 56px;
+      padding: 0 6%;
+    }
+
+    .card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+    }
+
+    .card h2 {
+      font-size: 1.08rem;
+      color: var(--yellow);
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .portal-section {
+      max-width: 460px;
+      margin: 0 auto 72px;
+      padding: 0 6%;
+    }
+
+    .portal-box {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 26px;
+    }
+
+    .portal-box h2 {
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+      color: var(--white);
+    }
+
+    .portal-box .sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--white);
+    }
+
+    input {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background-color: var(--black);
+      color: var(--white);
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    input:focus {
+      outline: 2px solid var(--yellow);
+      border-color: var(--yellow);
+    }
+
+    .status {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--yellow);
+      min-height: 20px;
+    }
+
+    .dashboard-preview {
+      display: none;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .dashboard-preview strong {
+      color: var(--white);
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 6%;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="brand">SOTA 325</a>
+    <a href="#portal" class="btn-yellow">Artist Portal</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="badge">GET HEARD, GET PAID!</div>
+      <h1>3 Minutes 25 Seconds Ichalo Chonse!</h1>
+      <div class="slogan">Distribute easily and keep 100% of your royalties.</div>
+      <p>
+        Self-service music distribution built for independent artists and labels—with fast submission,
+        100% royalty retention, and convenient Zambian Kwacha (ZMW) support.
+      </p>
+      <a href="#portal" class="btn-yellow">Enter Artist Portal</a>
+    </section>
+
+    <section class="features">
+      <article class="card">
+        <h2>Distribute Easily</h2>
+        <p>Submit your release quickly with a streamlined flow designed around speed and simplicity.</p>
+      </article>
+      <article class="card">
+        <h2>Keep 100% Royalties</h2>
+        <p>Stay in control of your music and keep 100% of your streaming royalties.</p>
+      </article>
+      <article class="card">
+        <h2>ZMW Ready</h2>
+        <p>Pay in Zambian Kwacha (ZMW) without international payment friction.</p>
+      </article>
+    </section>
+
+    <section id="portal" class="portal-section">
+      <div class="portal-box">
+        <h2>Artist Portal</h2>
+        <p class="sub">Sign in with your artist or label email to preview your SOTA 325 portal.</p>
+
+        <form id="portalForm">
+          <label for="artistName">Artist or Label Name</label>
+          <input id="artistName" type="text" placeholder="e.g. Soundtrack Artist" required />
+
+          <label for="artistEmail">Email Address</label>
+          <input id="artistEmail" type="email" placeholder="artist@sota325.com" required />
+
+          <button type="submit" class="btn-yellow" style="width: 100%;">Continue to Portal</button>
+        </form>
+
+        <div class="status" id="statusMessage"></div>
+
+        <div class="dashboard-preview" id="portalPreview">
+          <p><strong>Active Account:</strong> <span id="previewAccount"></span></p>
+          <p><strong>Royalty Share:</strong> 100% Artist Retention</p>
+          <p><strong>Next Step:</strong> Release submission &amp; catalog dashboard</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    SOTA 325 — GET HEARD, GET PAID! &bull; 3 Minutes 25 Seconds Ichalo Chonse!
+  </footer>
+
+  <script>
+    const form = document.getElementById('portalForm');
+    const statusMessage = document.getElementById('statusMessage');
+    const portalPreview = document.getElementById('portalPreview');
+    const previewAccount = document.getElementById('previewAccount');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const name = document.getElementById('artistName').value.trim();
+      const email = document.getElementById('artistEmail').value.trim();
+
+      statusMessage.textContent = 'Portal preview unlocked for ' + name + '.';
+      previewAccount.textContent = name + ' (' + email + ')';
+      portalPreview.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
